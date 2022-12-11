@@ -213,7 +213,7 @@ const Home: React.FunctionComponent<AppNavProps<"Home">> = ({ navigation }) => {
               fontFamily: FONTS.NunitoSansRegular,
             }}
           >
-            Choose an image of with text or take a new one.
+            Choose an image of an animal or take a new one.
           </Text>
           <View
             style={{
