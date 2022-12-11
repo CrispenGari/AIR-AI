@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Alert,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS, FONTS } from "../../constants";
@@ -171,7 +172,7 @@ const Home: React.FunctionComponent<AppNavProps<"Home">> = ({ navigation }) => {
                   justifyContent: "center",
                   alignItems: "center",
                   padding: 10,
-                  width: "100%",
+                  width: Dimensions.get("screen").width,
                 }}
                 source={{
                   uri: Image.resolveAssetSource(
