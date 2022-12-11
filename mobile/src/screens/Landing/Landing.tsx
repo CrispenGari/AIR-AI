@@ -31,7 +31,7 @@ const Landing = ({ navigation }) => {
             marginBottom: 30,
           }}
         >
-          character recognition
+          AIR Tool
         </Text>
         <Image
           source={{
@@ -51,8 +51,9 @@ const Landing = ({ navigation }) => {
             fontFamily: FONTS.NunitoSansRegular,
           }}
         >
-          CHARACTER RECOGNITION is a mobile AI tool for detecting text from
-          images in real time.
+          Animal Image Recognition (AIR) is a mobile AI tool for basic image
+          classification based on 10 animals from images in real time. (If you
+          don't like animals don't open this app.)
         </Text>
       </View>
       <View
@@ -69,7 +70,7 @@ const Landing = ({ navigation }) => {
           }}
           style={{
             marginVertical: 30,
-            backgroundColor: COLORS.green,
+            backgroundColor: COLORS.blue,
             width: "90%",
             paddingHorizontal: 20,
             paddingVertical: 15,

@@ -26,7 +26,7 @@ const Requesting = () => {
           letterSpacing: 2,
         }}
       >
-        detecting...
+        classifying...
       </Text>
     </View>
   );

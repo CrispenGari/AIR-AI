@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS, FONTS } from "../../constants";
@@ -16,7 +17,8 @@ import * as Camera from "expo-camera";
 import { useClassifyAnimalMutation } from "../../graphql/generated/graphql";
 import Requesting from "../../components/Requesting/Requesting";
 import { generateRNFile } from "../../utils";
-const Home = ({ navigation }) => {
+import { AppNavProps } from "../../params";
+const Home: React.FunctionComponent<AppNavProps<"Home">> = ({ navigation }) => {
   const { camera, library } = useMediaPermissions();
   const [image, setImage] = useState(null);
   const [predict, { loading, data }] = useClassifyAnimalMutation({
@@ -25,8 +27,8 @@ const Home = ({ navigation }) => {
   const openCamera = async () => {
     if (!camera) {
       Alert.alert(
-        "CR",
-        "CR tool does not have permission to access your camera.",
+        "AIR",
+        "AIR tool does not have permission to access your camera.",
         [
           {
             style: "default",
@@ -64,8 +66,8 @@ const Home = ({ navigation }) => {
   const selectImage = async () => {
     if (!library) {
       Alert.alert(
-        "CR",
-        "CR tool does not have permission to access your photos.",
+        "AIR",
+        "AIR tool does not have permission to access your photos.",
         [
           {
             style: "default",
@@ -101,9 +103,9 @@ const Home = ({ navigation }) => {
     }
   };
 
-  const detectText = async () => {
+  const recognizeImage = async () => {
     if (!!!image) {
-      Alert.alert("CR", "please select an image with text first.", [
+      Alert.alert("AIR", "please select an image with text first.", [
         {
           style: "destructive",
           text: "CANCEL",
@@ -125,18 +127,16 @@ const Home = ({ navigation }) => {
 
   React.useEffect(() => {
     let mounted = true;
-    if (mounted && !!data) {
+    if (mounted && !!data?.predictAnimal?.prediction) {
       navigation.navigate("Details", {
         image,
-        data,
+        prediction: data.predictAnimal.prediction,
       });
     }
     return () => {
       mounted = false;
     };
   }, [data]);
-
-  console.log({ data, loading });
   return (
     <View
       style={{
@@ -161,23 +161,37 @@ const Home = ({ navigation }) => {
                 width: "100%",
                 height: "70%",
                 justifyContent: "center",
-                padding: 10,
                 alignItems: "center",
-                backgroundColor: COLORS.dark,
+                backgroundColor: COLORS.naive,
               }}
             >
-              <Text
+              <ImageBackground
                 style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
                   padding: 10,
-                  textAlign: "center",
-                  color: "white",
-                  fontFamily: FONTS.NunitoSansRegular,
-                  fontSize: 20,
-                  letterSpacing: 2,
+                  width: "100%",
+                }}
+                source={{
+                  uri: Image.resolveAssetSource(
+                    require("../../../assets/cover.jpg")
+                  ).uri,
                 }}
               >
-                Select Image Or Take a photo.
-              </Text>
+                <Text
+                  style={{
+                    padding: 10,
+                    textAlign: "center",
+                    color: COLORS.main,
+                    fontFamily: FONTS.NunitoSansBlack,
+                    fontSize: 20,
+                    letterSpacing: 2,
+                  }}
+                >
+                  Select Image Or Take a photo.
+                </Text>
+              </ImageBackground>
             </TouchableOpacity>
           ) : (
             <Image
@@ -205,7 +219,7 @@ const Home = ({ navigation }) => {
             style={{
               margin: 10,
               padding: 20,
-              backgroundColor: COLORS.dark,
+              backgroundColor: COLORS.naive,
               borderRadius: 10,
               flexDirection: "row",
               alignItems: "center",
@@ -214,7 +228,7 @@ const Home = ({ navigation }) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: COLORS.green,
+                backgroundColor: COLORS.orange,
                 padding: 10,
                 width: 50,
                 height: 50,
@@ -229,7 +243,7 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: COLORS.green,
+                backgroundColor: COLORS.orange,
                 padding: 10,
                 width: 50,
                 height: 50,
@@ -244,24 +258,7 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontFamily: FONTS.NunitoSansItalic,
-              letterSpacing: 2,
-              fontSize: 16,
-              padding: 10,
-              textAlign: "center",
-            }}
-          >
-            Note that images with large amounts of text takes time to detect.
-          </Text>
-        </View>
+
         <View
           style={{
             justifyContent: "space-between",
@@ -271,10 +268,10 @@ const Home = ({ navigation }) => {
           }}
         >
           <TouchableOpacity
-            onPress={detectText}
+            onPress={recognizeImage}
             style={{
               marginVertical: 30,
-              backgroundColor: COLORS.green,
+              backgroundColor: COLORS.orange,
               width: "90%",
               paddingHorizontal: 20,
               paddingVertical: 15,
@@ -292,7 +289,7 @@ const Home = ({ navigation }) => {
                 fontSize: 20,
               }}
             >
-              DETECT TEXT
+              RECOGNIZE
             </Text>
           </TouchableOpacity>
           <Text

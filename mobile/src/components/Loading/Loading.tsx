@@ -26,13 +26,13 @@ const Loading = () => {
       />
       <Text
         style={{
-          color: COLORS.gray,
+          color: "white",
           letterSpacing: 3,
           fontSize: 20,
           marginTop: 30,
         }}
       >
-        character recognition
+        Animal Image Recognition
       </Text>
     </View>
   );
