@@ -1,0 +1,8 @@
+fragment PredictionFragment on Prediction {
+  predictions {
+    ...PredictedFragment
+  }
+  topPrediction {
+    ...PredictedFragment
+  }
+}

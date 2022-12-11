@@ -1,0 +1,12 @@
+
+mutation ClassifyAnimal($input: AnimalInput!) {
+  predictAnimal(input: $input) {
+    ok
+    error {
+      ...ErrorFragment
+    }
+    prediction {
+      ...PredictionFragment
+    }
+  }
+}
